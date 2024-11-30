@@ -1,0 +1,19 @@
+<div class="card my-3">
+  <div class="card-body">
+    <h5>Authenticate with API Key</h5>
+    <form [formGroup]="apiKeyForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="text" class="form-control" formControlName="authApiKey" />
+      </div>
+      <button class="btn btn-success mt-3" type="submit" [disabled]="apiKeyForm.invalid">
+        Authenticate
+      </button>
+    </form>
+    @if(authResponse){
+
+    <p class="mt-3 alert alert-success"> <strong>JWT token: </strong>{{ authResponse }}</p>
+    }
+
+  </div>
+</div>

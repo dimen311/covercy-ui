@@ -1,0 +1,48 @@
+<div class="container">
+  <h2>Your API Keys</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <!-- <th>ID</th> -->
+        <th>Key</th>
+        <th>Permissions</th>
+        <th>Created At</th>
+        <th>Last Used</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if(apiKeyModelArray | async; as apimodel){
+
+      @for (key of apimodel; track key) {
+       @if(key.lastUsedAt){
+      <tr>
+        <!-- <td>{{ key.id }}</td> -->
+        <td>{{ key.key }}</td>
+        <td>{{ key.permissions.join(', ') }}</td>
+        <td>{{ key.createdAt | date }}</td>
+        <td>{{ key.lastUsedAt | date:'H:mm:ss':'UTC' }}</td>
+        <td>
+          <span [ngClass]="{
+              'badge': true,
+              'bg-success': !key.isRevoked,
+              'bg-danger': key.isRevoked
+            }">
+            {{ key.isRevoked ? 'Revoked' : 'Active' }}
+          </span>
+        </td>
+        <td>
+          @if (!key.isRevoked) {
+          <button class="btn btn-danger btn-sm" (click)="revokeApiKey(key.id)">
+            Revoke
+          </button>
+          }
+        </td>
+      </tr>
+      }
+      }
+      }
+    </tbody>
+  </table>
+</div>
